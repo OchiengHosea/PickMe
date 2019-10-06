@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="java.util.ArrayList"/>
+        <import type="com.example.pickme.objects.Vehicle" />
+
+        <variable
+            name="vehicles"
+            type="ArrayList&lt;Vehicle&gt;"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/infoDirectives"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    >
+
+                    <TextView
+                        android:id="@+id/directiveMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_lightbulb_outline_yellow_24dp"
+                        android:drawablePadding="@dimen/half_fab_margin"
+                        android:padding="@dimen/fab_margin"
+                        android:text="@string/string_choose_route"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/originTextViewLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/directiveMessage"
+                        android:layout_alignBottom="@id/originTextView"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/fab_margin"
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:layout_marginEnd="@dimen/half_fab_margin"
+                        android:paddingStart="@dimen/half_fab_margin"
+                        android:paddingEnd="@dimen/half_fab_margin"
+                        android:gravity="fill"
+                        android:drawableStart="@drawable/ic_fiber_manual_record_blue_24dp"
+                        android:drawablePadding="@dimen/half_fab_margin"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/string_origin" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/originTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/directiveMessage"
+                        android:layout_alignStart="@id/destTextView"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:layout_marginEnd="@dimen/fab_margin"
+                        android:layout_marginBottom="@dimen/fab_margin"
+                        android:hint="@string/origin_lng_txt"
+                        />
+
+                    <TextView
+                        android:id="@+id/destTextViewLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/originTextViewLabel"
+                        android:layout_alignBottom="@id/destTextView"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/fab_margin"
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:layout_marginEnd="@dimen/half_fab_margin"
+                        android:paddingStart="@dimen/half_fab_margin"
+                        android:paddingEnd="@dimen/half_fab_margin"
+                        android:gravity="fill"
+                        android:drawableStart="@drawable/ic_center_focus_weak_blue_24dp"
+                        android:drawablePadding="@dimen/half_fab_margin"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/string_destination" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/destTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/originTextView"
+                        android:layout_toEndOf="@+id/destTextViewLabel"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/fab_margin"
+                        android:layout_marginBottom="@dimen/fab_margin"
+                        android:hint="@string/dest_lng_txt"
+                        />
+
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/divider1"
+                    app:layout_constraintTop_toBottomOf="@id/infoDirectives"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:background="@color/colorAccent"
+                    android:layout_margin="@dimen/half_fab_margin"
+                    />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/vehicleListHeader"
+                    android:padding="@dimen/fab_margin"
+                    app:layout_constraintTop_toBottomOf="@id/divider1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    >
+
+                    <TextView
+                        android:id="@+id/vehicleListTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/string_vehicle_list_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/vehicleListViewBtn"
+                        style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="List view"
+                        app:layout_constraintEnd_toStartOf="@id/guideline3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicleListTitle" />
+
+                    <Button
+                        android:id="@+id/vehicleMapViewBtn"
+                        style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Map view"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/guideline3"
+                        app:layout_constraintTop_toBottomOf="@id/vehicleListTitle" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent=".5" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/vehicles_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vehicleListHeader"
+                    app:vehiclesList="@{vehicles}" />
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".5" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

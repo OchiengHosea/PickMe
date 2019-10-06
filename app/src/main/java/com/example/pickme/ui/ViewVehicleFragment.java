@@ -1,0 +1,157 @@
+package com.example.pickme.ui;
+
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+
+import androidx.databinding.library.baseAdapters.BR;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.example.pickme.IMainActivity;
+import com.example.pickme.R;
+import com.example.pickme.data.DataUtil;
+import com.example.pickme.databinding.FragmentViewVehicleBinding;
+import com.example.pickme.objects.PickUpPoint;
+import com.example.pickme.objects.Vehicle;
+import com.example.pickme.viewmodels.VehicleViewModel;
+import com.mapbox.turf.TurfConstants;
+import com.mapbox.turf.TurfMeasurement;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link ViewVehicleFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link ViewVehicleFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class ViewVehicleFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+    private Vehicle activeVehicle;
+
+    private OnFragmentInteractionListener mListener;
+
+    // Data binding variable
+    FragmentViewVehicleBinding viewVehicleBinding;
+    VehicleViewModel vehicleViewModel;
+
+    public ViewVehicleFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment ViewVehicleFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static ViewVehicleFragment newInstance(String param1, String param2) {
+        ViewVehicleFragment fragment = new ViewVehicleFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+            activeVehicle = this.getArguments().getParcelable(getString(R.string.intent_vehicle));
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        Toast.makeText(container.getContext(), activeVehicle.getStringRepr(), Toast.LENGTH_SHORT).show();
+        viewVehicleBinding = FragmentViewVehicleBinding.inflate(inflater);
+        initPickUpPoints();
+        vehicleViewModel = new VehicleViewModel();
+        vehicleViewModel.setVehicle(activeVehicle);
+        viewVehicleBinding.setVehicleView(vehicleViewModel);
+        viewVehicleBinding.setVariable(BR.fragment, this);
+        viewVehicleBinding.setIMainActivity((IMainActivity) container.getContext());
+        return viewVehicleBinding.getRoot();
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public void updateVehicle(VehicleViewModel vehicleViewModel) {
+        viewVehicleBinding.setVehicleView(vehicleViewModel);
+
+
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+
+    public void initPickUpPoints() {
+        switch (activeVehicle.getRoute().getRouteId()){
+            case "236" : viewVehicleBinding.setPickupPoints(DataUtil.cbdToJujaPickUpPoints()); break;
+            case "237" : viewVehicleBinding.setPickupPoints(DataUtil.cbdToThikaPickUpPoints()); break;
+            default: viewVehicleBinding.setPickupPoints(DataUtil.cbdToLangataPickUpPoints());
+        }
+
+
+    }
+
+    public String calcDistFromOrigin(PickUpPoint pickUpPoint){
+        Double dist = TurfMeasurement.distance(activeVehicle.getOrigin().getTerminusPoint(), pickUpPoint.getLocation(), TurfConstants.UNIT_METERS);
+        Toast.makeText(getContext(), dist.toString(), Toast.LENGTH_LONG).show();
+        return "Approx 3Km";
+    }
+}

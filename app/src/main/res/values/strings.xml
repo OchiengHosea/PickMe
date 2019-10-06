@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">PickMe</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="vehicle_image_desc_text">Vehicle Image</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_view_vehicle">View Vehicle Fragment</string>
+    <string name="intent_vehicle">parsed_vehicle</string>
+    <string name="location_icon_string">Location Icon</string>
+    <string name="loc_setting_init_message">Please Wait... Obtaining Device Location</string>
+    <string name="retry_again">Retry Again</string>
+    <string name="view_vehicle_header">Routes this Vehicle Follows</string>
+    <string name="dummy_text">With regards to the provisional results released on 25th \n
+        September 2019, We are following up the following issues:
+        With regards to the provisional results released on 25th September 2019, \n
+        We are following up the following issues: \n
+        With regards to the provisional results released on 25th September 2019, \n
+        We are following up the following issues:
+    </string>
+    <string name="string_route_points">Pick Up Points</string>
+    <string name="string_choose_route">To get Started, Choose the route of the vehicle whose sit you want to reserve</string>
+    <string name="string_origin">Origin</string>
+    <string name="string_destination">Destination</string>
+    <string name="dest_lng_txt">Where You are going</string>
+    <string name="origin_lng_txt">Where You are or Coming from</string>
+    <string name="string_vehicle_list_title">Vehicle List</string>
+    <string name="string_check_out">Check Out</string>
+    <string name="string_total_capacity">Total Capacity</string>
+    <string name="string_booked_spaces">Booked Spaces</string>
+    <string name="string_passengers_on_board">Passengers On Board</string>
+</resources>
